@@ -16,9 +16,6 @@ dsni saya menggunakan ubuntu server 18.04 lts
 
 
 
+# Regards
 
-
-
-#Regards
-
-#Eki Indradi
+# Eki Indradi
