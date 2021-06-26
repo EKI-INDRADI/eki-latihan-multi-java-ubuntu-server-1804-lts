@@ -1,0 +1,113 @@
+============== EKI INDRADI RND 2021
+
+apt-get update
+apt-get install default-jdk  (ubuntu 1804 defaultnya java 11)
+apt-get install openjdk-8-jdk
+apt-get install openjdk-11-jdk
+
+
+apt-get install zip unzip
+
+
+java -version
+openjdk version "11.0.9.1" 2020-11-04
+OpenJDK Runtime Environment (build 11.0.9.1+1-Ubuntu-0ubuntu1.18.04)
+OpenJDK 64-Bit Server VM (build 11.0.9.1+1-Ubuntu-0ubuntu1.18.04, mixed mode, sharing)
+
+javac -version
+javac 11.0.9.1
+
+
+
+https://jdk.java.net/archive/
+cd /MANUAL_JAVA/ && curl -L -o openjdk-11.0.2_linux-x64_bin.tar.gz https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_linux-x64_bin.tar.gz
+cp -avr openjdk-11.0.2_linux-x64_bin.tar.gz ./DOWNLOADS/
+tar -xvzf openjdk-11.0.2_linux-x64_bin.tar.gz
+rm -rf openjdk-11.0.2_linux-x64_bin.tar.gz
+
+
+
+contoh ini saya gunakan untuk menggunakan confluent server jadi di ibaratkan jdk/jre/jvm untuk running agentjvm dari JMX_EXPORTER 
+yang mana membutuhkan 1 JVM dalam 1 service nya untuk mengeluarkan metrics promotheus , jika tidak paham ini abaikan saja lanjut ikuti contohnya
+
+
+di ibaratkan keperluan sebagai berikut :
+
+apt-get install default-jdk -> untuk control center
+cp -avr jdk-11.0.2 jdk-11.0.2-clone1 --> untuk zookeeper
+cp -avr jdk-11.0.2 jdk-11.0.2-clone2 --> untuk kafka
+cp -avr jdk-11.0.2 jdk-11.0.2-clone3 --> untuk connect
+jdk-11.0.2 --> cadangan
+
+
+https://www.edureka.co/blog/how-to-install-java-on-ubuntu/
+
+update-alternatives --install /usr/bin/java java /MANUAL_JAVA/jdk-11.0.2/bin/java 100
+update-alternatives --install /usr/bin/javac javac /MANUAL_JAVA/jdk-11.0.2/bin/javac 100
+
+update-alternatives --install /usr/bin/java java /MANUAL_JAVA/jdk-11.0.2-clone1/bin/java 100
+update-alternatives --install /usr/bin/javac javac /MANUAL_JAVA/jdk-11.0.2-clone1/bin/javac 100
+
+update-alternatives --install /usr/bin/java java /MANUAL_JAVA/jdk-11.0.2-clone2/bin/java 100
+update-alternatives --install /usr/bin/javac javac /MANUAL_JAVA/jdk-11.0.2-clone2/bin/javac 100
+
+update-alternatives --install /usr/bin/java java /MANUAL_JAVA/jdk-11.0.2-clone3/bin/java 100
+update-alternatives --install /usr/bin/javac javac /MANUAL_JAVA/jdk-11.0.2-clone3/bin/javac 100
+
+
+update-alternatives --install /usr/bin/jar jar /MANUAL_JAVA/jdk-11.0.2/bin/jar 100
+update-alternatives --install /usr/bin/jar jar /MANUAL_JAVA/jdk-11.0.2-clone1/bin/jar 100
+update-alternatives --install /usr/bin/jar jar /MANUAL_JAVA/jdk-11.0.2-clone2/bin/jar 100
+update-alternatives --install /usr/bin/jar jar /MANUAL_JAVA/jdk-11.0.2-clone3/bin/jar 100
+
+
+
+https://gist.github.com/LongClipeus/77b0beda7a3a794688a5c4257007d3c8
+
+update-alternatives --config jar
+update-alternatives --config javac
+update-alternatives --config java  
+
+update-alternatives --set java /MANUAL_JAVA/jdk-11.0.2/bin/java 
+
+  Selection    Path                                         Priority   Status
+------------------------------------------------------------
+* 0            /usr/lib/jvm/java-11-openjdk-amd64/bin/java   1111      auto mode
+  1            /MANUAL_JAVA/jdk-11.0.2-clone1/bin/java       100       manual mode
+  2            /MANUAL_JAVA/jdk-11.0.2-clone2/bin/java       100       manual mode
+  3            /MANUAL_JAVA/jdk-11.0.2-clone3/bin/java       100       manual mode
+  4            /MANUAL_JAVA/jdk-11.0.2/bin/java              100       manual mode
+  5            /usr/lib/jvm/java-11-openjdk-amd64/bin/java   1111      manual mode
+
+Press <enter> to keep the current choice[*], or type selection number: 5
+
+update-alternatives --display java
+
+update-alternatives --display javac
+
+
+java -version
+
+
+nano ~/.bashrc
+#EKI JAVA
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export PATH=$PATH:$JAVA_HOME/bin
+
+export JAVA_8_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export PATH_8=$PATH_8:$JAVA_8_HOME/bin
+
+export JAVA_11_MANUAL_HOME=/MANUAL_JAVA/jdk-11.0.2
+export PATH_11_MANUAL=$PATH_11_MANUAL:$JAVA_11_MANUAL_HOME/bin
+
+export JAVA_11_MANUAL_CLONE1_HOME=/MANUAL_JAVA/jdk-11.0.2-clone1
+export PATH_11_MANUAL_CLONE1=$PATH_11_MANUAL_CLONE1:$JAVA_11_MANUAL_CLONE1_HOME/bin
+
+export JAVA_11_MANUAL_CLONE2_HOME=/MANUAL_JAVA/jdk-11.0.2-clone2
+export PATH_11_MANUAL_CLONE2=$PATH_11_MANUAL_CLONE2:$JAVA_11_MANUAL_CLONE2_HOME/bin
+
+export JAVA_11_MANUAL_CLONE3_HOME=/MANUAL_JAVA/jdk-11.0.2-clone3
+export PATH_11_MANUAL_CLONE3=$PATH_11_MANUAL_CLONE3:$JAVA_11_MANUAL_CLONE3_HOME/bin
+
+
+============== EKI INDRADI RND 2021
